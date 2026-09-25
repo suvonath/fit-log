@@ -8,11 +8,16 @@ import {
   type ReactNode,
 } from "react";
 import type { Workout } from "@/types/workout";
-
+interface ToastState {
+  message: string;
+}
 interface FitLogContextType {
   plan: Workout[];
   saved: Workout[];
   completed: number[];
+
+  toast: ToastState | null;
+  showToast: (message: string) => void;
 
   addToPlan: (workout: Workout) => void;
   removeFromPlan: (id: number) => void;
@@ -27,30 +32,26 @@ interface FitLogContextType {
   isCompleted: (id: number) => boolean;
 }
 
-const FitLogContext = createContext<
-  FitLogContextType | undefined
->(undefined);
+const FitLogContext = createContext<FitLogContextType | undefined>(undefined);
 
 interface FitLogProviderProps {
   children: ReactNode;
 }
 
-export function FitLogProvider({
-  children,
-}: FitLogProviderProps) {
+export function FitLogProvider({ children }: FitLogProviderProps) {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
   const [completed, setCompleted] = useState<number[]>([]);
 
   const [hydrated, setHydrated] = useState(false);
+  const [toast, setToast] = useState<ToastState | null>(null);
 
   // Load data from localStorage
   useEffect(() => {
     try {
       const storedPlan = localStorage.getItem("fitlog-plan");
       const storedSaved = localStorage.getItem("fitlog-saved");
-      const storedCompleted =
-        localStorage.getItem("fitlog-completed");
+      const storedCompleted = localStorage.getItem("fitlog-completed");
 
       if (storedPlan) {
         setPlan(JSON.parse(storedPlan));
@@ -64,10 +65,7 @@ export function FitLogProvider({
         setCompleted(JSON.parse(storedCompleted));
       }
     } catch (error) {
-      console.error(
-        "Failed to load FitLog data:",
-        error
-      );
+      console.error("Failed to load FitLog data:", error);
     } finally {
       setHydrated(true);
     }
@@ -77,39 +75,26 @@ export function FitLogProvider({
   useEffect(() => {
     if (!hydrated) return;
 
-    localStorage.setItem(
-      "fitlog-plan",
-      JSON.stringify(plan)
-    );
+    localStorage.setItem("fitlog-plan", JSON.stringify(plan));
   }, [plan, hydrated]);
 
   // Save saved workouts
   useEffect(() => {
     if (!hydrated) return;
 
-    localStorage.setItem(
-      "fitlog-saved",
-      JSON.stringify(saved)
-    );
+    localStorage.setItem("fitlog-saved", JSON.stringify(saved));
   }, [saved, hydrated]);
 
   // Save completed workouts
   useEffect(() => {
     if (!hydrated) return;
 
-    localStorage.setItem(
-      "fitlog-completed",
-      JSON.stringify(completed)
-    );
+    localStorage.setItem("fitlog-completed", JSON.stringify(completed));
   }, [completed, hydrated]);
 
   function addToPlan(workout: Workout) {
     setPlan((currentPlan) => {
-      if (
-        currentPlan.some(
-          (item) => item.id === workout.id
-        )
-      ) {
+      if (currentPlan.some((item) => item.id === workout.id)) {
         return currentPlan;
       }
 
@@ -123,19 +108,13 @@ export function FitLogProvider({
 
   function removeFromPlan(id: number) {
     setPlan((currentPlan) =>
-      currentPlan.filter(
-        (workout) => workout.id !== id
-      )
+      currentPlan.filter((workout) => workout.id !== id),
     );
   }
 
   function saveWorkout(workout: Workout) {
     setSaved((currentSaved) => {
-      if (
-        currentSaved.some(
-          (item) => item.id === workout.id
-        )
-      ) {
+      if (currentSaved.some((item) => item.id === workout.id)) {
         return currentSaved;
       }
 
@@ -145,9 +124,7 @@ export function FitLogProvider({
 
   function removeSaved(id: number) {
     setSaved((currentSaved) =>
-      currentSaved.filter(
-        (workout) => workout.id !== id
-      )
+      currentSaved.filter((workout) => workout.id !== id),
     );
   }
 
@@ -162,19 +139,22 @@ export function FitLogProvider({
   }
 
   function isInPlan(id: number) {
-    return plan.some(
-      (workout) => workout.id === id
-    );
+    return plan.some((workout) => workout.id === id);
   }
 
   function isSaved(id: number) {
-    return saved.some(
-      (workout) => workout.id === id
-    );
+    return saved.some((workout) => workout.id === id);
   }
 
   function isCompleted(id: number) {
     return completed.includes(id);
+  }
+  function showToast(message: string) {
+    setToast({ message });
+
+    setTimeout(() => {
+      setToast(null);
+    }, 2500);
   }
 
   return (
@@ -183,6 +163,9 @@ export function FitLogProvider({
         plan,
         saved,
         completed,
+
+        toast,
+        showToast,
 
         addToPlan,
         removeFromPlan,
@@ -206,9 +189,7 @@ export function useFitLog() {
   const context = useContext(FitLogContext);
 
   if (!context) {
-    throw new Error(
-      "useFitLog must be used inside FitLogProvider"
-    );
+    throw new Error("useFitLog must be used inside FitLogProvider");
   }
 
   return context;

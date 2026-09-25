@@ -12,26 +12,29 @@ export default function WorkoutActions({
   workout,
 }: WorkoutActionsProps) {
   const {
-    addToPlan,
-    saveWorkout,
-    isInPlan,
-    isSaved,
-  } = useFitLog();
+  addToPlan,
+  saveWorkout,
+  isInPlan,
+  isSaved,
+  showToast,
+} = useFitLog();
 
   const addedToPlan = isInPlan(workout.id);
   const saved = isSaved(workout.id);
 
-  function handleAddToPlan() {
-    if (addedToPlan) return;
+ function handleAddToPlan() {
+  if (addedToPlan) return;
 
-    addToPlan(workout);
-  }
+  addToPlan(workout);
+  showToast(`${workout.name} added to today's plan`);
+}
 
-  function handleSave() {
-    if (saved) return;
+ function handleSave() {
+  if (saved) return;
 
-    saveWorkout(workout);
-  }
+  saveWorkout(workout);
+  showToast(`${workout.name} saved for later`);
+}
 
   return (
     <div className="mt-12 flex flex-col gap-3 sm:flex-row">

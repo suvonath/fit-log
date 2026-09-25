@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FitLogProvider } from "@/context/FitLogContext";
+import Toast from "@/components/Toast";
 
 export const metadata: Metadata = {
   title: "FitLog | Workout Library",
@@ -23,6 +24,7 @@ export default function RootLayout({
         <FitLogProvider>
              <Navbar />
           <main>{children}</main>
+           <Toast />
         </FitLogProvider>
 
         <Footer />

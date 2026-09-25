@@ -10,8 +10,15 @@ type Tab = "plan" | "saved";
 export default function MyPlanContent() {
   const [activeTab, setActiveTab] = useState<Tab>("plan");
 
-  const { plan, saved, removeFromPlan, removeSaved, markAsDone, isCompleted } =
-    useFitLog();
+  const {
+    plan,
+    saved,
+    removeFromPlan,
+    removeSaved,
+    markAsDone,
+    isCompleted,
+    showToast,
+  } = useFitLog();
 
   const currentWorkouts = activeTab === "plan" ? plan : saved;
 
@@ -180,7 +187,10 @@ export default function MyPlanContent() {
                             <button
                               type="button"
                               disabled={isCompleted(workout.id)}
-                              onClick={() => markAsDone(workout.id)}
+                              onClick={() => {
+                                markAsDone(workout.id);
+                                showToast(`${workout.name} marked as done`);
+                              }}
                               className="btn btn-sm btn-outline rounded-none border-[#444] text-white hover:border-[#ccff00] hover:bg-transparent hover:text-[#ccff00] disabled:border-[#ccff00] disabled:text-[#ccff00]"
                             >
                               {isCompleted(workout.id)
@@ -191,11 +201,15 @@ export default function MyPlanContent() {
 
                           <button
                             type="button"
-                            onClick={() =>
-                              activeTab === "plan"
-                                ? removeFromPlan(workout.id)
-                                : removeSaved(workout.id)
-                            }
+                            onClick={() => {
+                              if (activeTab === "plan") {
+                                removeFromPlan(workout.id);
+                                showToast(`${workout.name} removed from plan`);
+                              } else {
+                                removeSaved(workout.id);
+                                showToast(`${workout.name} removed from saved`);
+                              }
+                            }}
                             className="btn btn-sm btn-outline rounded-none border-[#444] text-white hover:border-red-400 hover:bg-transparent hover:text-red-400"
                           >
                             Remove
