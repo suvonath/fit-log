@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { Dumbbell, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useFitLog } from "@/context/FitLogContext";
+
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { plan, saved } = useFitLog();
 
   return (
     <header className="border-b border-[#2a2a2a] bg-[#111111]">
@@ -48,14 +51,14 @@ export default function Navbar() {
             href="/my-plan"
             className="rounded-full bg-[#ccff00] px-4 py-2 text-xs font-black uppercase tracking-wider text-black transition hover:bg-white"
           >
-            Plan <span className="ml-1">0</span>
+            Plan <span className="ml-1">{plan.length}</span>
           </Link>
 
           <Link
             href="/my-plan"
             className="rounded-full border border-[#555] px-4 py-2 text-xs font-black uppercase tracking-wider text-white transition hover:border-white"
           >
-            Saved <span className="ml-1">0</span>
+            Saved <span className="ml-1">{saved.length}</span>
           </Link>
         </div>
 
@@ -96,7 +99,7 @@ export default function Navbar() {
                 className="rounded-full bg-[#ccff00] px-4 py-2 text-xs font-black uppercase tracking-wider text-black"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Plan <span className="ml-1">0</span>
+                Plan <span className="ml-1">{plan.length}</span>
               </Link>
 
               <Link
@@ -104,7 +107,7 @@ export default function Navbar() {
                 className="rounded-full border border-[#555] px-4 py-2 text-xs font-black uppercase tracking-wider text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Saved <span className="ml-1">0</span>
+                Saved <span className="ml-1">{saved.length}</span>
               </Link>
             </div>
           </nav>
