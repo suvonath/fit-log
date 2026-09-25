@@ -4,11 +4,15 @@ import Link from "next/link";
 import { Dumbbell, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useFitLog } from "@/context/FitLogContext";
-
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { plan, saved } = useFitLog();
+  const pathname = usePathname();
+
+  const isWorkoutPage = pathname === "/";
+  const isPlanPage = pathname === "/my-plan";
 
   return (
     <header className="border-b border-[#2a2a2a] bg-[#111111]">
@@ -32,14 +36,20 @@ export default function Navbar() {
         <nav className="hidden items-center gap-8 md:flex">
           <Link
             href="/"
-            className="text-sm font-bold uppercase tracking-wider text-[#ccff00]"
+            className={`text-sm font-bold uppercase tracking-wider transition ${
+              isWorkoutPage
+                ? "text-[#ccff00]"
+                : "text-gray-400 hover:text-white"
+            }`}
           >
             Workout
           </Link>
 
           <Link
             href="/my-plan"
-            className="text-sm font-bold uppercase tracking-wider text-gray-400 transition hover:text-white"
+            className={`text-sm font-bold uppercase tracking-wider transition ${
+              isPlanPage ? "text-[#ccff00]" : "text-gray-400 hover:text-white"
+            }`}
           >
             My Plan
           </Link>
@@ -79,7 +89,9 @@ export default function Navbar() {
           <nav className="flex flex-col gap-4">
             <Link
               href="/"
-              className="text-sm font-bold uppercase tracking-wider text-[#ccff00]"
+              className={`text-sm font-bold uppercase tracking-wider ${
+                isWorkoutPage ? "text-[#ccff00]" : "text-gray-400"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               Workout
@@ -87,7 +99,9 @@ export default function Navbar() {
 
             <Link
               href="/my-plan"
-              className="text-sm font-bold uppercase tracking-wider text-gray-400"
+              className={`text-sm font-bold uppercase tracking-wider ${
+                isPlanPage ? "text-[#ccff00]" : "text-gray-400"
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               My Plan
