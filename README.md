@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FitLog
+
+FitLog is a modern workout library and personal workout planning application built with Next.js, TypeScript, Tailwind CSS, and daisyUI.
+
+It allows users to explore exercises, view detailed workout information, build a daily workout plan, save workouts for later, and track completed exercises.
+
+## Live Project
+
+Add your deployed URL here after deployment.
+
+## Features
+
+- Browse a library of 12 workouts covering major muscle groups
+- View detailed workout information including equipment, difficulty, sets, reps, duration, calories, rating, and instructions
+- Sort workouts by duration, calories, or rating
+- Add workouts to Today's Plan
+- Save workouts for later
+- View and manage Today's Plan
+- Mark workouts as completed
+- Remove workouts from the plan or saved list
+- Persistent workout data using localStorage
+- Responsive design for mobile, tablet, and desktop
+- Toast notifications for workout actions
+- Custom loading state
+- Custom 404 page
+- Dynamic workout detail routes
+
+## Technologies
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- daisyUI
+- Lucide React
+- REST API
+- localStorage
+
+## API
+
+FitLog uses the FitLog REST API to retrieve workout data.
+
+API endpoint:
+
+`https://api.abcz.workers.dev/api/fitlog`
+
+## Project Structure
+
+```text
+app/
+├── workout/
+│   └── [id]/
+│       └── page.tsx
+├── my-plan/
+│   └── page.tsx
+├── layout.tsx
+├── loading.tsx
+├── not-found.tsx
+├── page.tsx
+└── globals.css
+
+components/
+├── Footer.tsx
+├── Hero.tsx
+├── MyPlanContent.tsx
+├── Navbar.tsx
+├── SortDropdown.tsx
+├── Toast.tsx
+├── WorkoutActions.tsx
+├── WorkoutCard.tsx
+└── WorkoutLibrary.tsx
+
+context/
+└── FitLogContext.tsx
+
+lib/
+└── api.ts
+
+types/
+└── workout.ts
+```
 
 ## Getting Started
 
-First, run the development server:
+Clone the repository:
+
+```bash
+git clone https://github.com/ProgrammingHero1/B14-A6-Fit-Log.git
+```
+
+Navigate into the project:
+
+```bash
+cd B14-A6-Fit-Log
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the application at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Build
 
-## Learn More
+To create a production build:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm start
+```
 
-## Deploy on Vercel
+## Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built as a Programming Hero assignment using Next.js, TypeScript, and modern frontend development practices.
