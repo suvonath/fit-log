@@ -1,11 +1,10 @@
+
 import { notFound } from "next/navigation";
 import { getWorkoutById } from "@/lib/api";
 import WorkoutActions from "@/components/WorkoutActions";
 
 interface WorkoutDetailsPageProps {
-  params: Promise<{
-    id: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
 export default async function WorkoutDetailsPage({
@@ -20,141 +19,94 @@ export default async function WorkoutDetailsPage({
   }
 
   return (
-    <section className="border-b border-[#2a2a2a]">
-      <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16 lg:px-10 lg:py-24">
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          {/* Image */}
-          <div className="overflow-hidden bg-[#202020]">
+    <section className="min-h-[calc(100vh-120px)] border-b border-[#1d2026]">
+      <div className="mx-auto max-w-[1000px] px-5 py-10 lg:px-0 lg:py-14">
+        <div className="grid gap-10 lg:grid-cols-2">
+
+          {/* Workout Image */}
+          <div className="overflow-hidden rounded-xl">
             <img
               src={workout.image}
               alt={workout.name}
-              className="aspect-[4/3] h-full w-full object-cover"
+              className="aspect-[0.72] w-full object-cover"
             />
           </div>
 
-          {/* Content */}
-          <div className="flex flex-col justify-center">
-            <p className="mb-3 text-xs font-black uppercase tracking-[0.25em] text-[#ccff00]">
-              Workout Details
-            </p>
-
-            <h1 className="text-4xl font-black uppercase leading-none tracking-tight sm:text-5xl lg:text-6xl">
+          {/* Workout Information */}
+          <div>
+            <h1 className="font-oswald text-[34px] font-black uppercase leading-none tracking-[-0.5px] sm:text-[38px]">
               {workout.name}
             </h1>
 
+            <p className="mt-4 text-[14px] leading-[21px] text-[#9a9ca4]">
+              {workout.description}
+            </p>
+
             {/* Tags */}
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               {workout.muscleGroups.map((group) => (
                 <span
                   key={group}
-                  className="rounded-full border border-[#444] px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-300"
+                  className="rounded-full bg-[#c8ff00] px-3 py-1.5 text-[10px] font-bold uppercase text-[#111]"
                 >
                   {group}
                 </span>
               ))}
             </div>
 
-            <p className="mt-6 leading-7 text-gray-400">
-              {workout.description}
-            </p>
+            {/* Specifications */}
+            <div className="mt-6 overflow-hidden rounded-xl border border-[#252932] bg-[#171a20]">
+              {[
+                ["Equipment", workout.equipment],
+                ["Difficulty", workout.difficulty],
+                ["Sets", workout.sets],
+                ["Reps", workout.reps],
+                ["Duration", `${workout.duration} min`],
+                ["Calories", `${workout.caloriesBurned} kcal`],
+                ["Rating", workout.rating],
+              ].map(([label, value]) => (
+                <div
+                  key={label}
+                  className="flex min-h-[42px] items-center justify-between border-b border-[#252932] px-4 last:border-b-0"
+                >
+                  <span className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#92959e]">
+                    {label}
+                  </span>
 
-            {/* Specs */}
-            <div className="mt-8 grid grid-cols-2 border-l border-t border-[#2a2a2a]">
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Equipment
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.equipment}
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Difficulty
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.difficulty}
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Sets
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.sets}
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Reps
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.reps}
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Duration
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.duration} min
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Calories
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.caloriesBurned} kcal
-                </p>
-              </div>
-
-              <div className="border-b border-r border-[#2a2a2a] p-4">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
-                  Rating
-                </p>
-                <p className="mt-1 text-sm font-bold text-white">
-                  {workout.rating}
-                </p>
-              </div>
+                  <span className="text-[13px] font-medium text-[#e5e6e9]">
+                    {value}
+                  </span>
+                </div>
+              ))}
             </div>
+
+            {/* Instructions */}
+            <div className="mt-7">
+              <h2 className="text-[14px] font-black uppercase tracking-wide text-white">
+                Instructions
+              </h2>
+
+              <ol className="mt-4 space-y-2.5">
+                {workout.instructions.map((instruction, index) => (
+                  <li
+                    key={index}
+                    className="flex gap-3 text-[13px] leading-[19px] text-[#b0b2b9]"
+                  >
+                    <span className="shrink-0 font-bold text-[#b0b2b9]">
+                      {index + 1}.
+                    </span>
+
+                    <span>{instruction}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <WorkoutActions workout={workout} />
           </div>
         </div>
-
-        {/* Instructions */}
-        <div className="mt-16 border-t border-[#2a2a2a] pt-12">
-          <p className="mb-3 text-xs font-black uppercase tracking-[0.25em] text-[#ccff00]">
-            How To Perform
-          </p>
-
-          <h2 className="text-3xl font-black uppercase sm:text-4xl">
-            Instructions
-          </h2>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {workout.instructions.map((instruction, index) => (
-              <div
-                key={instruction}
-                className="border border-[#2a2a2a] bg-[#151515] p-6"
-              >
-                <span className="text-sm font-black text-[#ccff00]">
-                  0{index + 1}
-                </span>
-
-                <p className="mt-4 leading-7 text-gray-400">{instruction}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Actions */}
-        <WorkoutActions workout={workout} />
       </div>
     </section>
   );
 }
+

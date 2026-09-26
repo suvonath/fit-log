@@ -1,6 +1,11 @@
 "use client";
 
-import { Check, Plus, Bookmark, BookmarkCheck } from "lucide-react";
+import {
+  Bookmark,
+  BookmarkCheck,
+  CalendarPlus,
+  Check,
+} from "lucide-react";
 import type { Workout } from "@/types/workout";
 import { useFitLog } from "@/context/FitLogContext";
 
@@ -12,66 +17,62 @@ export default function WorkoutActions({
   workout,
 }: WorkoutActionsProps) {
   const {
-  addToPlan,
-  saveWorkout,
-  isInPlan,
-  isSaved,
-  showToast,
-} = useFitLog();
+    addToPlan,
+    saveWorkout,
+    isInPlan,
+    isSaved,
+    showToast,
+  } = useFitLog();
 
   const addedToPlan = isInPlan(workout.id);
   const saved = isSaved(workout.id);
 
- function handleAddToPlan() {
-  if (addedToPlan) return;
+  function handleAddToPlan() {
+    if (addedToPlan) return;
 
-  addToPlan(workout);
-  showToast(`${workout.name} added to today's plan`);
-}
+    addToPlan(workout);
+    showToast(`${workout.name} added to today's plan`);
+  }
 
- function handleSave() {
-  if (saved) return;
+  function handleSave() {
+    if (saved) return;
 
-  saveWorkout(workout);
-  showToast(`${workout.name} saved for later`);
-}
+    saveWorkout(workout);
+    showToast(`${workout.name} saved for later`);
+  }
 
   return (
-    <div className="mt-12 flex flex-col gap-3 sm:flex-row">
+    <div className="mt-6 flex gap-3">
       <button
+        type="button"
         onClick={handleAddToPlan}
         disabled={addedToPlan}
-        className="btn rounded-none border-[#ccff00] bg-[#ccff00] px-8 text-black hover:border-[#ccff00] hover:bg-[#ccff00] disabled:border-[#444] disabled:bg-[#222] disabled:text-gray-500"
+        className="flex h-8 items-center gap-2 rounded-[7px] bg-[#c8ff00] px-4 text-[10px] font-bold text-[#111] transition hover:bg-[#d5ff42] disabled:bg-[#252932] disabled:text-[#777] "
       >
         {addedToPlan ? (
-          <>
-            <Check size={18} />
-            Added to Plan
-          </>
+          <Check size={12} />
         ) : (
-          <>
-            <Plus size={18} />
-            Add to Today&apos;s Plan
-          </>
+          <CalendarPlus size={12} />
         )}
+
+        {addedToPlan
+          ? "Added to today's plan"
+          : "Add to today's plan"}
       </button>
 
       <button
+        type="button"
         onClick={handleSave}
         disabled={saved}
-        className="btn btn-outline rounded-none border-[#444] px-8 text-white hover:border-[#ccff00] hover:bg-transparent hover:text-[#ccff00] disabled:border-[#444] disabled:text-gray-500"
+        className="flex h-8 items-center gap-2 rounded-[7px] border border-[#30343d] px-4 text-[10px] font-medium text-white transition hover:border-[#c8ff00] hover:text-[#c8ff00] disabled:text-[#777] "
       >
         {saved ? (
-          <>
-            <BookmarkCheck size={18} />
-            Saved
-          </>
+          <BookmarkCheck size={12} />
         ) : (
-          <>
-            <Bookmark size={18} />
-            Save for Later
-          </>
+          <Bookmark size={12} />
         )}
+
+        {saved ? "Saved" : "Save for later"}
       </button>
     </div>
   );

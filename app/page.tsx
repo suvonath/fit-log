@@ -6,9 +6,8 @@ export default async function Home() {
   const workouts = await getWorkouts();
 
   return (
-    <>
+    < >
       <Hero />
-
       <WorkoutLibrary workouts={workouts} />
     </>
   );

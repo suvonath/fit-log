@@ -92,25 +92,33 @@ export function FitLogProvider({ children }: FitLogProviderProps) {
     localStorage.setItem("fitlog-completed", JSON.stringify(completed));
   }, [completed, hydrated]);
 
-  function addToPlan(workout: Workout) {
-    setPlan((currentPlan) => {
-      if (currentPlan.some((item) => item.id === workout.id)) {
-        return currentPlan;
-      }
+ function addToPlan(workout: Workout) {
+  setPlan((currentPlan) => {
+    if (currentPlan.some((item) => item.id === workout.id)) {
+      return currentPlan;
+    }
 
-      if (currentPlan.length >= 5) {
-        return currentPlan;
-      }
+    if (currentPlan.length >= 5) {
+      return currentPlan;
+    }
 
-      return [...currentPlan, workout];
-    });
-  }
+    return [...currentPlan, workout];
+  });
+
+  setCompleted((currentCompleted) =>
+    currentCompleted.filter((id) => id !== workout.id),
+  );
+}
 
   function removeFromPlan(id: number) {
-    setPlan((currentPlan) =>
-      currentPlan.filter((workout) => workout.id !== id),
-    );
-  }
+  setPlan((currentPlan) =>
+    currentPlan.filter((workout) => workout.id !== id),
+  );
+
+  setCompleted((currentCompleted) =>
+    currentCompleted.filter((completedId) => completedId !== id),
+  );
+}
 
   function saveWorkout(workout: Workout) {
     setSaved((currentSaved) => {
