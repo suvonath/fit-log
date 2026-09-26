@@ -1,52 +1,49 @@
-# FitLog
+FitLog
 
-FitLog is a modern workout library and personal workout planning application built with Next.js, TypeScript, Tailwind CSS, and daisyUI.
+A modern workout library and personal workout planning application built with Next.js, TypeScript, Tailwind CSS, and daisyUI.
 
-It allows users to explore exercises, view detailed workout information, build a daily workout plan, save workouts for later, and track completed exercises.
+FitLog allows users to explore workouts, view detailed exercise information, build a daily workout plan, save workouts for later, and track completed exercises.
 
-## Live Project
+Live Project
 
-Add your deployed URL here after deployment.
+🔗 https://fit-log-henna-phi.vercel.app/
 
-## Features
+Technologies Used
+Next.js 16 — React framework with App Router
+React — Component-based UI development
+TypeScript — Type-safe development
+Tailwind CSS — Utility-first styling
+daisyUI — UI components
+Lucide React — Icons
+REST API — Workout data
+localStorage — Persistent user workout data
+Key Features
+1. Workout Library
 
-- Browse a library of 12 workouts covering major muscle groups
-- View detailed workout information including equipment, difficulty, sets, reps, duration, calories, rating, and instructions
-- Sort workouts by duration, calories, or rating
-- Add workouts to Today's Plan
-- Save workouts for later
-- View and manage Today's Plan
-- Mark workouts as completed
-- Remove workouts from the plan or saved list
-- Persistent workout data using localStorage
-- Responsive design for mobile, tablet, and desktop
-- Toast notifications for workout actions
-- Custom loading state
-- Custom 404 page
-- Dynamic workout detail routes
+Browse a collection of workouts with useful information such as muscle groups, equipment, duration, calories, and rating.
 
-## Technologies
+2. Detailed Workout Information
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- daisyUI
-- Lucide React
-- REST API
-- localStorage
+View complete workout details including difficulty, sets, reps, duration, calories, rating, equipment, and step-by-step instructions.
 
-## API
+3. Personal Workout Plan
+
+Add workouts to Today's Plan, manage the selected exercises, and track completed workouts.
+
+4. Save & Sort Workouts
+
+Save workouts for later and sort workouts by duration, calories, or rating for easier browsing.
+
+5. Persistent & Responsive Experience
+
+Workout plans, saved workouts, and completed exercises are preserved using localStorage, while the interface is designed to work across mobile, tablet, and desktop devices.
+
+API
 
 FitLog uses the FitLog REST API to retrieve workout data.
 
-API endpoint:
-
-`https://api.abcz.workers.dev/api/fitlog`
-
-## Project Structure
-
-```text
+https://api.abcz.workers.dev/api/fitlog
+Project Structure
 app/
 ├── workout/
 │   └── [id]/
@@ -78,54 +75,27 @@ lib/
 
 types/
 └── workout.ts
-```
-
-## Getting Started
-
-Clone the repository:
-
-```bash
+Getting Started
+Clone the repository
 git clone https://github.com/ProgrammingHero1/B14-A6-Fit-Log.git
-```
-
-Navigate into the project:
-
-```bash
+Navigate to the project directory
 cd B14-A6-Fit-Log
-```
-
-Install dependencies:
-
-```bash
+Install dependencies
 npm install
-```
-
-Start the development server:
-
-```bash
+Start the development server
 npm run dev
-```
 
-Open the application at:
+Open http://localhost:3000 in your browser.
 
-```text
-http://localhost:3000
-```
+Production Build
 
-## Build
+Create an optimized production build:
 
-To create a production build:
-
-```bash
 npm run build
-```
 
-To start the production server:
+Start the production server:
 
-```bash
 npm start
-```
-
-## Author
+Author
 
 Built as a Programming Hero assignment using Next.js, TypeScript, and modern frontend development practices.
